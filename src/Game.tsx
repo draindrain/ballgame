@@ -1,4 +1,4 @@
-import "./App.css"
+import "./Game.css"
 
 function Game() {
     return <></>
