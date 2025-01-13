@@ -1,6 +1,5 @@
 import { Environment, OrbitControls, Plane, Sphere } from "@react-three/drei"
 import "./Game.css"
-import EnvMap from "./EnvMap"
 
 function Game() {
     return (
