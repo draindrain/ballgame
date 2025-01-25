@@ -1,4 +1,4 @@
-import { Environment, OrbitControls, Plane, Sphere } from "@react-three/drei"
+import { Environment, OrbitControls } from "@react-three/drei"
 import "./Game.css"
 import Terrain from "./Terrain"
 import { Physics } from "@react-three/rapier"
@@ -16,7 +16,7 @@ function Game() {
             <axesHelper args={[100]} />
 
             {/* Grid Helper */}
-            <Physics debug>
+            <Physics>
                 <Terrain />
 
                 {/*<Sphere args={[0.5, 32, 32]} position={[0, 0.5, 0]}>
