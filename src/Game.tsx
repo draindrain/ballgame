@@ -1,30 +1,28 @@
 import { Environment, OrbitControls, Plane, Sphere } from "@react-three/drei"
 import "./Game.css"
+import Terrain from "./Terrain"
+import { Physics } from "@react-three/rapier"
 
 function Game() {
     return (
         <>
-            <OrbitControls />
+            <OrbitControls maxDistance={10000} />
 
-            {/* Lighting */}
             <Environment
+                environmentIntensity={1.0}
                 background
                 files='./static/kloofendal_48d_partly_cloudy_puresky_1k.hdr'
             />
+            <axesHelper args={[100]} />
 
-            {/* Plane */}
-            <Plane
-                args={[10, 10]} // Width and height of the plane
-                rotation={[-Math.PI / 2, 0, 0]} // Rotate the plane to be horizontal
-                position={[0, -0.5, 0]} // Position it slightly below the sphere
-            >
-                <meshStandardMaterial color='lightgrey' />
-            </Plane>
+            {/* Grid Helper */}
+            <Physics debug>
+                <Terrain />
 
-            {/* Sphere (Ball) */}
-            <Sphere args={[0.5, 32, 32]} position={[0, 0.5, 0]}>
-                <meshStandardMaterial color='blue' />
-            </Sphere>
+                {/*<Sphere args={[0.5, 32, 32]} position={[0, 0.5, 0]}>
+                    <meshStandardMaterial color='blue' />
+                </Sphere>*/}
+            </Physics>
         </>
     )
 }
