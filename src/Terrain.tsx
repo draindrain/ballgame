@@ -3,12 +3,13 @@ import { useEffect, useState } from "react"
 import { createNoise2D } from "simplex-noise"
 import { PlaneGeometry } from "three"
 
-const TERRAIN_SIZE = 1024
+const TERRAIN_SIZE = 512
 const TERRAIN_ARRAY_MAX = TERRAIN_SIZE - 1
 const TERRAIN_VERTEX_COUNT = TERRAIN_SIZE * TERRAIN_SIZE
-const NOISE_SCALE = 0.003
-const SECONDARY_NOISE_SCALE = 0.001
-const HEIGHT_MULTIPLIER = 100
+const NOISE_SCALE = 0.03
+const SECONDARY_NOISE_SCALE = 0.01
+const TERNARY_NOISE_SCALE = 0.001
+const HEIGHT_MULTIPLIER = 10
 const WIDTH_MULTIPLIER = 10
 
 const Terrain = () => {
@@ -35,7 +36,9 @@ const Terrain = () => {
                         x * SECONDARY_NOISE_SCALE,
                         z * SECONDARY_NOISE_SCALE
                     ) *
-                        2) *
+                        6 +
+                    noise2D(x * TERNARY_NOISE_SCALE, z * TERNARY_NOISE_SCALE) *
+                        20) *
                 HEIGHT_MULTIPLIER
             planePosition.setZ(i, height)
         }
@@ -80,7 +83,7 @@ const Terrain = () => {
     return (
         <RigidBody colliders={false} type='fixed'>
             <mesh geometry={geometry} rotation-x={-Math.PI / 2}>
-                <meshStandardMaterial wireframe color={"teal"} />
+                <meshStandardMaterial color={"teal"} />
             </mesh>
         </RigidBody>
     )
