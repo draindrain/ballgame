@@ -11,7 +11,7 @@ function Game() {
             <Environment
                 environmentIntensity={1.0}
                 background
-                files='./static/kloofendal_48d_partly_cloudy_puresky_1k.hdr'
+                files='./public/kloofendal_48d_partly_cloudy_puresky_1k.hdr'
             />
             <axesHelper args={[100]} />
 
