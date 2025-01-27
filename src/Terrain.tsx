@@ -6,9 +6,9 @@ import { PlaneGeometry } from "three"
 const TERRAIN_SIZE = 512
 const TERRAIN_ARRAY_MAX = TERRAIN_SIZE - 1
 const TERRAIN_VERTEX_COUNT = TERRAIN_SIZE * TERRAIN_SIZE
-const NOISE_SCALE = 0.03
-const SECONDARY_NOISE_SCALE = 0.01
-const TERNARY_NOISE_SCALE = 0.001
+const NOISE_SCALE_1 = 0.0005
+const NOISE_SCALE_2 = 0.01
+const NOISE_SCALE_3 = 0.002
 const HEIGHT_MULTIPLIER = 10
 const WIDTH_MULTIPLIER = 10
 
@@ -19,6 +19,7 @@ const Terrain = () => {
     )
     useEffect(() => {
         const noise2D = createNoise2D()
+        const noise2D2 = createNoise2D()
         const heightMap = new Float32Array(TERRAIN_VERTEX_COUNT)
         const geometry = new PlaneGeometry(
             TERRAIN_ARRAY_MAX * WIDTH_MULTIPLIER,
@@ -30,16 +31,15 @@ const Terrain = () => {
         for (var i = 0; i < TERRAIN_VERTEX_COUNT; i++) {
             const x = planePosition.getX(i)
             const z = planePosition.getY(i)
+
+            const noise3 = noise2D(x * NOISE_SCALE_3, z * NOISE_SCALE_3)
+            const noise1 = noise2D2(x * NOISE_SCALE_1, z * NOISE_SCALE_1)
+            const noiseSwitch = Math.max(noise1 + noise3 - 0.1, 0)
+            const noise2 =
+                noise2D(x * NOISE_SCALE_2, z * NOISE_SCALE_2) * noiseSwitch
+
             const height =
-                (noise2D(x * NOISE_SCALE, z * NOISE_SCALE) +
-                    noise2D(
-                        x * SECONDARY_NOISE_SCALE,
-                        z * SECONDARY_NOISE_SCALE
-                    ) *
-                        6 +
-                    noise2D(x * TERNARY_NOISE_SCALE, z * TERNARY_NOISE_SCALE) *
-                        20) *
-                HEIGHT_MULTIPLIER
+                (noise2 * 2 + noise3 * 16 + noise1 * 20) * HEIGHT_MULTIPLIER
             planePosition.setZ(i, height)
         }
 
