@@ -28,7 +28,7 @@ const Terrain = () => {
             TERRAIN_ARRAY_MAX
         )
         const planePosition = geometry.attributes.position
-        for (var i = 0; i < TERRAIN_VERTEX_COUNT; i++) {
+        for (let i = 0; i < TERRAIN_VERTEX_COUNT; i++) {
             const x = planePosition.getX(i)
             const z = planePosition.getY(i)
 
@@ -43,7 +43,7 @@ const Terrain = () => {
             planePosition.setZ(i, height)
         }
 
-        for (var i = 0; i < TERRAIN_VERTEX_COUNT; i++) {
+        for (let i = 0; i < TERRAIN_VERTEX_COUNT; i++) {
             const x =
                 (planePosition.getX(i) + WIDTH_MULTIPLIER / 2) /
                     WIDTH_MULTIPLIER +
@@ -60,8 +60,8 @@ const Terrain = () => {
         }
         geometry.computeVertexNormals()
 
-        let rigidBody = world.createRigidBody(rapier.RigidBodyDesc.fixed())
-        let colliderDesc = rapier.ColliderDesc.heightfield(
+        const rigidBody = world.createRigidBody(rapier.RigidBodyDesc.fixed())
+        const colliderDesc = rapier.ColliderDesc.heightfield(
             TERRAIN_ARRAY_MAX,
             TERRAIN_ARRAY_MAX,
             heightMap,
